@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Library Management System</title>
+</head>
+<body>
+<script>
+
+function getThickerBook(a, b) {
+  return a > b ? a : b;
+}
+function bookFactorial(n) {
+  if (n < 0) throw new Error("Negative not allowed");
+  let fact = 1;
+  for (let i = 1; i <= n; i++) fact *= i;
+  return fact;
+}
+const checkLibraryNote = (note) => note.toLowerCase().includes("library");
+function secretShelf(pass) {
+  const note = "Rare Book Note: Ancient Manuscript";
+  return function(tryPass) {
+    return tryPass === pass ? note : "Access Denied";
+  };
+}
+var libraryName = "Smart Library";
+function scopeDemo() {
+  let totalBooks = 5000; 
+  if (true) {
+    const borrowed = 20; 
+    console.log("Inside block: Borrowed =", borrowed);
+  }
+  console.log("Inside function: Total Books =", totalBooks);
+}
+console.log("Global: Library Name =", libraryName);
+
+function reverseISBN(num) {
+  if (isNaN(num)) throw new Error("Invalid ISBN");
+  let rev = parseInt(Math.abs(num).toString().split("").reverse().join(""));
+  return num < 0 ? -rev : rev;
+}
+function isBookIdPalindrome(id) {
+  let str = id.toString();
+  return str === str.split("").reverse().join("");
+}
+function isTitlePalindrome(title) {
+  let clean = title.toLowerCase().replace(/[^a-z0-9]/g, "");
+  return clean === clean.split("").reverse().join("");
+}
+function sqrtPages(p) {
+  if (isNaN(p)) throw new Error("Invalid input");
+  if (p < 0) throw new Error("Negative not allowed");
+  return Math.sqrt(p);
+}
+function isPrimeShelf(n) {
+  if (isNaN(n) || n < 2) throw new Error("Invalid number");
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i === 0) return false;
+  }
+  return true;
+}
+
+while (true) {
+  let choice = prompt(
+    "Enter your choice (1-8):"
+  );
+
+  if (choice === null || choice === "9") {
+    console.log("Exiting");
+    break;
+  }
+
+  try {
+    switch (choice) {
+      case "1":
+        let a = parseInt(prompt("Enter pages of Book 1:"));
+        let b = parseInt(prompt("Enter pages of Book 2:"));
+        console.log("Thicker book has pages:", getThickerBook(a, b));
+        break;
+      case "2":
+        let n = parseInt(prompt("Enter a number for factorial:"));
+        console.log("Library ticket ID (Factorial):", bookFactorial(n));
+        break;
+      case "3":
+        let note = prompt("Enter a note:");
+        console.log("Contains a 'Library'?", checkLibraryNote(note));
+        break;
+      case "4":
+        let pass = prompt("Set a password for rare shelf:");
+        let shelf = secretShelf(pass);
+        let attempt = prompt("Enter password to retrieve note:");
+        console.log("rare book note access?:", shelf(attempt));
+        break;
+      case "5":
+        let isbn = parseInt(prompt("Enter ISBN number:"));
+        console.log("Reversed ISBN:", reverseISBN(isbn));
+        console.log("Is ISBN number palindrome?", isBookIdPalindrome(isbn));
+        break;
+      case "6":
+        let title = prompt("Enter a book title:");
+        console.log("Is book title palindrome?", isTitlePalindrome(title));
+        break;
+      case "7":
+        let p = parseInt(prompt("Enter total pages read:"));
+        console.log("Square root of total pages read:", sqrtPages(p));
+        break;
+      case "8":
+        let shelfNum = parseInt(prompt("Enter shelf number:"));
+        console.log("Is Shelf number prime?", isPrimeShelf(shelfNum));
+        break;
+      default:
+        console.log("Invalid");
+    }
+  } catch (err) {
+    console.log("Error:", err.message);
+  }
+}
+scopeDemo();
+</script>
+</body>
+</html>
+kjfdghj kl;
