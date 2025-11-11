@@ -1,0 +1,47 @@
+<script>
+    let cart = [
+  { id: 1, name: "Pen", price: 20, qty: 2, category: "stationery" },
+  { id: 2, name: "Mug", price: 150, qty: 1, category: "kitchen" },
+  { id: 3, name: "Notebook", price: 80, qty: 3, category: "stationery" }
+];
+
+let discountedItemTotals = cart.map(item => {
+  let subtotal = item.price * item.qty;
+  if (item.qty >= 3) {
+    subtotal -= subtotal * 0.05; 
+  }
+  return subtotal;
+});
+
+let stationeryItems = cart.filter(item => item.category === "stationery");
+let discountedStationeryTotal = stationeryItems.reduce((sum, item) => {
+  let total = item.price * item.qty;
+  if (item.qty >= 3) total -= total * 0.05;
+  return sum + total;
+}, 0);
+
+let stationeryDiscount = 0;
+if (discountedStationeryTotal > 200) {
+  stationeryDiscount = discountedStationeryTotal * 0.10;
+}
+
+let subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+let totalAfterItemDiscounts = discountedItemTotals.reduce((sum, val) => sum + val, 0);
+let itemDiscount = subtotal - totalAfterItemDiscounts;
+let finalTotal = totalAfterItemDiscounts - stationeryDiscount;
+
+cart.forEach(item => {
+  let total = item.price * item.qty;
+  if (item.qty >= 3) {
+    console.log(`Item: ${item.name} (x${item.qty}) = ${total} + discount applied`);
+  } else {
+    console.log(`Item: ${item.name} (x${item.qty}) = ${total}`);
+  }
+});
+
+console.log("---------------------------------");
+console.log("Subtotal:", subtotal);
+console.log("Item Discounts:", itemDiscount.toFixed(2));
+console.log("Stationery Discount:", stationeryDiscount.toFixed(2));
+console.log("Final Total:", finalTotal.toFixed(2));
+</script>
