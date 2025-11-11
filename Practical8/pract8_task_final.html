@@ -1,0 +1,209 @@
+<html>
+<head>
+  <title>Gym Admission Form</title>
+  <style>
+    body { font-family: Arial; background: #f0f0f0; text-align: center; }
+    form { background: white; width: 360px; margin: 30px auto; padding: 20px; border-radius: 10px; }
+    label { display: block; font-weight: bold; margin-top: 10px; }
+    input, select { width: 95%; padding: 5px; border: 2px solid gray; border-radius: 5px; }
+    span { font-size: 12px; display: block; margin-bottom: 4px; }
+    .genderrow { display: flex; gap: 10px; margin-top: 5px; }
+    button { margin-top: 10px; padding: 5px 10px; }
+  </style>
+</head>
+<body>
+<h2>Gym Admission Form</h2>
+<form name="form1" id="form1">
+  <label>Full Name:</label>
+  <input type="text" id="name">
+  <span id="namemsg"></span>
+
+  <label>Email:</label>
+  <input type="email" id="email">
+  <span id="emailmsg"></span>
+
+  <label>Age (18-60):</label>
+  <input type="number" id="age">
+  <span id="agemsg"></span>
+
+  <label>Gender:</label>
+  <div class="genderrow">
+    <input type="radio" name="gender" value="male">Male
+    <input type="radio" name="gender" value="female">Female
+    <input type="radio" name="gender" value="other">Other
+  </div>
+  <span id="gendermsg"></span>
+
+  <label>Membership:</label>
+  <select id="membership">
+    <option value="">Select</option>
+    <option>Monthly</option>
+    <option>Quarterly</option>
+    <option>Yearly</option>
+  </select>
+  <span id="membermsg"></span>
+
+  <label>Password:</label>
+  <input type="password" id="password">
+  <span id="passmsg"></span>
+
+  <label>Confirm Password:</label>
+  <input type="password" id="conpass">
+  <span id="cpassmsg"></span>
+
+  <label>Phone:</label>
+  <input type="text" id="mobilenum" maxlength="10">
+  <span id="phonemsg"></span>
+
+  <label>Date of Birth:</label>
+  <input type="date" id="dob">
+  <span id="dobmsg"></span>
+
+  <label>Profile Photo:</label>
+  <input type="file" id="pp" accept=".jpg,.png">
+  <span id="photomsg"></span>
+
+  <label><input type="checkbox" id="terms"><br> I agree to Terms</label>
+  <span id="termsmsg"></span>
+
+  <button type="submit">Submit</button>
+  <button type="reset">Reset</button>
+
+  <p id="finalmsg"></p>
+</form>
+
+<script>
+var form = document.forms["form1"]
+document.getElementById("name").oninput = function() {
+  var n = document.getElementById("name").value
+  if(n.length<3) {
+    document.getElementById("namemsg").innerText="❌ Name too short"
+    document.getElementById("name").style.borderColor="red"
+  } else {
+    document.getElementById("namemsg").innerText="✅ Looks good"
+    document.getElementById("name").style.borderColor="green"
+  }
+}
+document.getElementById("email").oninput = function() {
+  var e = document.getElementById("email").value
+  if(e.indexOf("@")>-1 && e.indexOf(".")>-1) {
+    document.getElementById("emailmsg").innerText="✅ Valid"
+    document.getElementById("email").style.borderColor="green"
+  } else {
+    document.getElementById("emailmsg").innerText="❌ Invalid"
+    document.getElementById("email").style.borderColor="red"
+  }
+}
+document.getElementById("age").oninput = function() {
+  var a = document.getElementById("age").value
+  if(a>=18 && a<=60) {
+    document.getElementById("agemsg").innerText="✅ OK"
+    document.getElementById("age").style.borderColor="green"
+  } else {
+    document.getElementById("agemsg").innerText="❌ 18-60 only"
+    document.getElementById("age").style.borderColor="red"
+  }
+}
+document.getElementById("membership").onchange = function() {
+  if(document.getElementById("membership").value=="") {
+    document.getElementById("membermsg").innerText="❌ Select one"
+    document.getElementById("membership").style.borderColor="red"
+  } else {
+    document.getElementById("membermsg").innerText="✅ Selected"
+    document.getElementById("membership").style.borderColor="green"
+  }
+}
+document.getElementById("password").oninput = function() {
+  var p = document.getElementById("password").value
+  if(p.length<6) {
+    document.getElementById("passmsg").innerText="❌ Too short"
+    document.getElementById("password").style.borderColor="red"
+  } else {
+    document.getElementById("passmsg").innerText="✅ OK"
+    document.getElementById("password").style.borderColor="green"
+  }
+}
+document.getElementById("conpass").oninput = function() {
+  var p1 = document.getElementById("password").value
+  var p2 = document.getElementById("conpass").value
+  if(p1==p2 && p2!="") {
+    document.getElementById("cpassmsg").innerText="✅ Match"
+    document.getElementById("conpass").style.borderColor="green"
+  } else {
+    document.getElementById("cpassmsg").innerText="❌ Not match"
+    document.getElementById("conpass").style.borderColor="red"
+  }
+}
+document.getElementById("mobilenum").oninput = function() {
+  var m = document.getElementById("mobilenum").value
+  if(m.length==10 && !isNaN(m)) {
+    document.getElementById("phonemsg").innerText="✅ OK"
+    document.getElementById("mobilenum").style.borderColor="green"
+  } else {
+    document.getElementById("phonemsg").innerText="❌ 10 digits"
+    document.getElementById("mobilenum").style.borderColor="red"
+  }
+}
+document.getElementById("dob").onchange = function() {
+  var d = new Date(document.getElementById("dob").value)
+  var today = new Date()
+  if(d<=today) {
+    document.getElementById("dobmsg").innerText="✅ OK"
+    document.getElementById("dob").style.borderColor="green"
+  } else {
+    document.getElementById("dobmsg").innerText="❌ Future date"
+    document.getElementById("dob").style.borderColor="red"
+  }
+}
+document.getElementById("pp").onchange = function() {
+  var f = document.getElementById("pp").files[0]
+  if(f && (f.type=="image/jpeg" || f.type=="image/png") && f.size<=1024*1024) {
+    document.getElementById("photomsg").innerText="✅ OK"
+    document.getElementById("pp").style.borderColor="green"
+  } else {
+    document.getElementById("photomsg").innerText="❌ JPG/PNG ≤1MB"
+    document.getElementById("pp").style.borderColor="red"
+  }
+}
+document.getElementById("terms").onchange = function() {
+  if(document.getElementById("terms").checked) {
+    document.getElementById("termsmsg").innerText="✅ Accepted"
+  } else {
+    document.getElementById("termsmsg").innerText="❌ Must accept"
+  }
+}
+form.onsubmit = function(e) {
+  e.preventDefault()
+  var valid = true
+  if(document.getElementById("name").value.length<3) valid=false
+  if(document.getElementById("email").value.indexOf("@")==-1) valid=false
+  if(document.getElementById("age").value<18 || document.getElementById("age").value>60) valid=false
+  if(!document.querySelector('input[name="gender"]:checked')) valid=false
+  if(document.getElementById("membership").value=="") valid=false
+  if(document.getElementById("password").value.length<6) valid=false
+  if(document.getElementById("conpass").value != document.getElementById("password").value) valid=false
+  var m = document.getElementById("mobilenum").value
+  if(m.length!=10 || isNaN(m)) valid=false
+  var d = new Date(document.getElementById("dob").value)
+  if(d>new Date()) valid=false
+  var f = document.getElementById("pp").files[0]
+  if(!f || (f.type!="image/jpeg" && f.type!="image/png") || f.size>1024*1024) valid=false
+  if(!document.getElementById("terms").checked) valid=false
+  if(valid) {
+    document.getElementById("finalmsg").innerText="✅ Form submitted successfully, Welcome"
+    document.getElementById("finalmsg").style.color="green"
+  } else {
+    document.getElementById("finalmsg").innerText="❌ Please fill all fields correctly!"
+    document.getElementById("finalmsg").style.color="red"
+  }
+}
+form.onreset = function() {
+  var spans = document.getElementsByTagName("span")
+  for(var i=0;i<spans.length;i++){ spans[i].innerText="" }
+  var fields = document.querySelectorAll("input, select")
+  for(var i=0;i<fields.length;i++){ fields[i].style.borderColor="gray" }
+  document.getElementById("finalmsg").innerText=""
+}
+</script>
+</body>
+</html>
