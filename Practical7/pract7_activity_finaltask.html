@@ -1,0 +1,36 @@
+<html>
+<head>
+  <title>Random Background Changer</title>
+</head>
+<body>
+  <h2 id="colorText">Click the button</h2>
+  <button onclick="changeBackground()">Change Background</button>
+  <button onclick="startChanging()">Start Auto</button>
+  <button onclick="stopChanging()">Stop Auto</button>
+  <script>
+    let timer = null;
+    function makeColor() {
+      let letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    function changeBackground() {
+      let newColor = makeColor();               
+      document.body.style.backgroundColor = newColor; 
+      document.getElementById("colorText").textContent = newColor; 
+    }
+    function startChanging() {
+      if (timer === null) {
+        timer = setInterval(changeBackground, 2000);
+      }
+    }
+    function stopChanging() {
+      clearInterval(timer);
+      timer = null;
+    }
+  </script>
+</body>
+</html>
